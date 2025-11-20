@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Message Board</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --bg: #020617;
+      --bg-alt: #0b1020;
+      --accent: #4f46e5;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: rgba(148, 163, 184, 0.4);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+      letter-spacing: -0.03em;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .card {
+      border-radius: 18px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      padding: 16px 16px 18px;
+      box-shadow: 0 16px 30px rgba(15, 23, 42, 0.9);
+    }
+
+    .card h2 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+
+    .field label {
+      color: var(--muted);
+    }
+
+    .field input,
+    .field textarea {
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+      font-size: 0.9rem;
+      resize: vertical;
+      outline: none;
+      transition: border 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.5);
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: #f9fafb;
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 16px 36px rgba(79, 70, 229, 0.8);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 46px rgba(79, 70, 229, 0.9);
+    }
+
+	.nav-cta {
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #4f46e5, #22c55e);
+      color: #f9fafb;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 14px 30px rgba(22, 163, 74, 0.5);
+      transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 20px 45px rgba(16, 185, 129, 0.65);
+    }
+
+    .posts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .post {
+      padding: 10px 10px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 0.9rem;
+    }
+
+    .post-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .post-author {
+      font-weight: 500;
+    }
+
+    .post-time {
+      font-size: 0.75rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .post-message {
+      color: var(--text);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .empty {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+      padding: 12px 8px;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 768px) {
+      .board {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo">
+        <div class="logo-mark"></div>
+        <div class="logo-text">My Community Center</div>
+      </div>
+      <nav>
+        <a href="about.html">Who we are</a>		<!-- Change section in " " to modify destination of the click-->
+        <a href="index.html#services">Our Mission</a>
+        <a href="index.html#contact">Contact</a>
+        <button class="nav-cta" onclick="window.location.href='index.html'">
+          Home
+        </button>
+      </nav>
+    </header>
+  
+  <div class="page">
+    <header>
+      <h1>Message Board</h1>
+      <p>Post a message and see it appear below. Messages are stored on the server.</p>
+    </header>
+
+    <main class="board">
+      <!-- New post form -->
+      <section class="card">
+        <h2>New message</h2>
+        <form id="messageForm">
+          <div class="field">
+            <label for="author">Name</label>
+            <input id="author" name="author" placeholder="Your name" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" placeholder="What do you want to say?" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Post message</button>
+        </form>
+      </section>
+
+      <!-- Message list -->
+      <section class="card">
+        <div class="toolbar">
+          <span>Messages</span>
+          <!-- If you later want a Clear All button, we can wire a DELETE endpoint -->
+        </div>
+        <div id="posts" class="posts-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const postsContainer = document.getElementById("posts");
+    const form = document.getElementById("messageForm");
+
+    function formatTime(dateString) {
+      const d = new Date(dateString);
+      return d.toLocaleString();
+    }
+
+    function renderPosts(posts) {
+      postsContainer.innerHTML = "";
+
+      if (!posts || posts.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "No messages yet. Be the first to post!";
+        postsContainer.appendChild(empty);
+        return;
+      }
+
+      posts
+        .slice()
+        .reverse()
+        .forEach((post) => {
+          const wrapper = document.createElement("article");
+          wrapper.className = "post";
+
+          const header = document.createElement("div");
+          header.className = "post-header";
+
+          const author = document.createElement("span");
+          author.className = "post-author";
+          author.textContent = post.author || "Anonymous";
+
+          const time = document.createElement("span");
+          time.className = "post-time";
+          time.textContent = formatTime(post.createdAt);
+
+          header.appendChild(author);
+          header.appendChild(time);
+
+          const msg = document.createElement("div");
+          msg.className = "post-message";
+          msg.textContent = post.message;
+
+          wrapper.appendChild(header);
+          wrapper.appendChild(msg);
+          postsContainer.appendChild(wrapper);
+        });
+    }
+
+    async function loadPosts() {
+      try {
+        const res = await fetch("/api/messages");
+        if (!res.ok) throw new Error("Failed to load messages");
+        const data = await res.json();
+        renderPosts(data);
+      } catch (err) {
+        console.error(err);
+        postsContainer.innerHTML = "<div class='empty'>Error loading messages.</div>";
+      }
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const author = document.getElementById("author").value.trim();
+      const message = document.getElementById("message").value.trim();
+      if (!message) return;
+
+      try {
+        const res = await fetch("/api/messages", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ author, message }),
+        });
+        if (!res.ok) throw new Error("Failed to save message");
+        form.reset();
+        await loadPosts();
+      } catch (err) {
+        console.error(err);
+        alert("There was a problem posting your message.");
+      }
+    });
+
+    // Initial load
+    loadPosts();
+  </script>
+</body>
+</html>
+

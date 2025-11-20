@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Awesome Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: light dark;
+      --bg: #050816;
+      --bg-alt: #0b1020;
+      --accent: #4f46e5;
+      --accent-soft: rgba(79, 70, 229, 0.15);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: rgba(148, 163, 184, 0.3);
+      --radius-lg: 18px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.85);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #111827 25%, #020617 45%, #000 100%);	<!-- These control the background colors-->
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 16px 60px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 20px;
+      margin-bottom: 26px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7));
+      backdrop-filter: blur(22px);
+      box-shadow: var(--shadow-soft);
+      position: sticky;
+      top: 12px;
+      z-index: 10;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 30% 0, #22d3ee, #6366f1 45%, #a855f7 100%);
+      box-shadow:
+        0 0 25px rgba(56, 189, 248, 0.7),
+        0 0 45px rgba(79, 70, 229, 0.55);
+    }
+
+    .logo-text {
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      font-size: 1.02rem;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.9rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 999px;
+      transition: color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+    }
+
+    nav a:hover {
+      color: var(--text);
+      background: rgba(148, 163, 184, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .nav-cta {
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #4f46e5, #22c55e);
+      color: #f9fafb;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 14px 30px rgba(22, 163, 74, 0.5);
+      transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 20px 45px rgba(16, 185, 129, 0.65);
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 26px;
+      margin-bottom: 40px;
+      align-items: center;
+    }
+
+    .hero-main {
+      padding: 22px 20px 24px;
+      border-radius: 26px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.3), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.2), transparent 50%),
+        rgba(15, 23, 42, 0.9);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.76rem;
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 999px;
+      padding: 5px 11px 5px 6px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      margin-bottom: 12px;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 18px rgba(34, 197, 94, 0.8);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.1rem, 2.9rem, 3.1rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(120deg, #38bdf8, #818cf8, #a855f7);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--muted);
+      max-width: 32rem;
+      margin-bottom: 16px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.14s ease, box-shadow 0.14s ease, background 0.14s ease, border 0.14s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: #f9fafb;
+      box-shadow: 0 18px 40px rgba(79, 70, 229, 0.65);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 50px rgba(79, 70, 229, 0.8);
+    }
+
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(148, 163, 184, 0.6);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(129, 140, 248, 0.8);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px dashed rgba(148, 163, 184, 0.4);
+      padding-top: 12px;
+    }
+
+    .hero-meta span {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    /* SIDE CARD */
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .panel {
+      border-radius: 22px;
+      padding: 16px 16px 18px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.18), transparent 55%),
+        rgba(15, 23, 42, 0.95);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
+    }
+
+    .panel h2 {
+      font-size: 0.98rem;
+      margin-bottom: 8px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.78rem;
+    }
+
+    .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--muted);
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 10px;
+      font-size: 0.8rem;
+    }
+
+    .metric {
+      flex: 1;
+      border-radius: 16px;
+      padding: 8px 10px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      text-align: left;
+    }
+
+    .metric-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .metric-value {
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    /* SECTIONS */
+    section {
+      margin-bottom: 32px;
+    }
+
+    section h2 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    section p {
+      font-size: 1.5rem;
+      color: var(--muted);
+      max-width: 54rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .card {
+      padding: 14px 14px 15px;
+      border-radius: var(--radius-lg);
+      background: var(--bg-alt);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 14px 28px rgba(15, 23, 42, 0.9);
+      font-size: 0.9rem;
+    }
+
+    .card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    /* CONTACT */
+    .contact {
+      border-radius: 22px;
+      padding: 16px 16px 18px;
+      border: 1px dashed rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at center, var(--accent-soft), transparent 65%);
+    }
+
+    .contact form {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.86rem;
+    }
+
+    .field label {
+      color: var(--muted);
+    }
+
+    .field input,
+    .field textarea {
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+      font-size: 0.86rem;
+      outline: none;
+      transition: border 0.14s ease, box-shadow 0.14s ease, background 0.14s ease;
+    }
+
+    .field textarea {
+      border-radius: 16px;
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.6);
+      background: rgba(15, 23, 42, 0.96);
+    }
+
+    .contact .btn-primary {
+      justify-self: flex-start;
+      margin-top: 4px;
+    }
+
+    footer {
+      margin-top: 32px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+      border-top: 1px solid rgba(15, 23, 42, 0.8);
+      padding-top: 16px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      header {
+        border-radius: 18px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-main {
+        order: 1;
+      }
+
+      .hero-side {
+        order: 2;
+      }
+    }
+	
+.card-button {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+	
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo">
+        <div class="logo-mark"></div>
+        <div class="logo-text">My Community Center</div>
+      </div>
+      <nav>
+        <a href="about.html">Who we are</a>
+        <a href="#services">Our Mission</a>
+        <a href="#contact">Contact</a>
+        <button class="nav-cta" onclick="document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' })">
+          Let’s talk
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-main">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span>Find Your Community · Learn What to Expect · Find Vetted Resources</span>
+          </div>
+          <h1>
+            A Modern Community Space
+            <span>For You.</span>
+          </h1>
+          <p class="hero-subtitle">
+            We help caregivers manage the information overload, so they can spend less time managing chaos and more time being family.
+          </p>
+
+          <div class="hero-actions">
+            <button class="btn-primary" onclick="window.location.href='cohortquiz.html'">
+              Take our Cohort Quiz →
+            </button>
+            <button class="btn-ghost" onclick="document.querySelector('#about').scrollIntoView({ behavior: 'smooth' })">
+              Learn more
+            </button>
+          </div>
+
+          <div class="hero-meta">
+            <span>⚡ Loads fast</span>
+            <span>📱 Mobile–friendly</span>
+            <span>🎨 Easy to customize</span>
+          </div>
+        </div>
+
+        <aside class="hero-side">
+          <div class="panel">
+            <h2>Navigating:</h2>
+            <div class="pill-row">
+              <span class="pill">Medicare</span>
+              <span class="pill">Medicaid</span>
+              <span class="pill">Assisted Living</span>
+              <span class="pill">Financial Planning</span>
+            </div>
+            <div class="metric-row">
+              <div class="metric">
+                <div class="metric-label">Caregivers Online</div>  <!-- Caregivers Online?? -->
+                <!--<div class="metric-value">1 day</div> -->
+				<div class="metric-value">
+				<span id="activeVisitors">0</span>
+				</div>
+              </div>
+              <div class="metric">
+                <div class="metric-label">Designed for</div>
+                <div class="metric-value">Clarity</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="about">
+        <h2>Our Mission</h2>
+        <p>
+          Guiding caregivers with clear learning paths, peer connection, and ready-to-use tools, so they can spend less time managing chaos and more time being family.	 
+        </p>
+		<ul style="list-style-type:circle; margin: 20px; margin-left: 80px;">
+			<li>Find connections to reduce isolation.</li>
+			<li>Help reduce guilt about not doing “enough” for parents​</li>
+			<li>Learn what to expect at each stage from peers living it now</li>
+			<li>Build skills for daily care, safety, and planning </li>
+			<li>Prepare for medical visits with simple checklists, question prompts, and post-visit recap templates</li>
+			<li>Find vetted resources and benefits through curated lists</li>
+		</ul>
+      </section>
+
+      <section id="services">
+        <h2>5 Pillars of our Community</h2>
+        <div class="grid">
+          <article class="card">
+            <a href="cohort_community.html" class="card card-button">
+			<h3>Cohort Community</h3>
+            <p>Matched groups based on dementia progression for relevant support and shared experiences</p>
+			</a>
+          </article>
+          <article class="card">
+			<a href="structuredlearning.html" class="card card-button">
+            <h3>Structured Learning Paths</h3>
+            <p>Short courses, expert videos, and plain-language guides that help caregivers build skills confidently</p>
+			</a>
+		  </article>
+          <article class="card">
+			<a href="peercommunity.html" class="card card-button">
+            <h3>Peer Community</h3>
+            <p>Real-time discussions, prompts, and emotional validation that reduce isolation and guilt</p>
+			</a>
+		  </article>
+		  <article class="card">
+			<a href="visittools.html" class="card card-button">
+            <h3>Visit Ready Tools</h3>
+            <p>Checklists, question prompts, and templates that simplify medical appointments and follow-ups</p>
+			</a>
+		  </article>
+		  <article class="card">
+			<a href="libraryresources.html" class="card card-button">
+            <h3>Curated Resource Library</h3>
+            <p>Vetted benefits, services, and caregiver-recommended resources—no more endless searching</p>
+			</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" class="contact">
+        <h2>Contact</h2>
+        <p>Ready to connect? Replace this form with your own setup (email, form tool, etc.).</p>
+        <form action="/contact" method="POST">
+			<div class="field">
+				<label for="name">Name</label>
+				<input id="name" name="name" placeholder="Your name" required />
+			</div>
+
+			<div class="field">
+				<label for="email">Email</label>
+				<input id="email" name="email" type="email" placeholder="you@example.com" required />
+			</div>
+
+			<div class="field">
+				<label for="message">Message</label>
+				<textarea id="message" name="message" placeholder="What can I help you with?" required></textarea>
+			</div>
+
+  <button class="btn-primary" type="submit">Send message</button>
+</form>
+	</section>
+    </main>
+
+    <footer>
+      © <span id="year"></span> Bloch Of Cheese LLC · Built with HTML, CSS, &amp; CHEDDAR
+    </footer>
+  </div>
+
+  <script>
+    // Set current year in footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Simple fake form handler
+    function handleSubmit(event) {
+      event.preventDefault();
+      alert("This form is just a demo. Wire it up to your own backend or form service.");
+      event.target.reset();
+    }
+  </script>
+<script>
+  (function () {
+    const activeEl = document.getElementById("activeVisitors");
+    if (!activeEl) return;
+
+    const protocol = window.location.protocol === "https:" ? "wss://" : "ws://";
+    const ws = new WebSocket(protocol + window.location.host);
+
+    ws.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        if (data.type === "userCount") {
+          activeEl.textContent = data.count;
+        }
+      } catch (e) {
+        console.error("WebSocket message error:", e);
+      }
+    };
+
+    ws.onopen = () => console.log("WS connected");
+    ws.onclose = ().log("WS disconnected");
+  })();
+</script>
+
+</body>
+</html>
