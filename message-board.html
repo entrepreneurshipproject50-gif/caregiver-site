@@ -116,7 +116,7 @@
       box-shadow: 0 20px 46px rgba(79, 70, 229, 0.9);
     }
 
-	.nav-cta {
+    .nav-cta {
       padding: 7px 14px;
       border-radius: 999px;
       background: linear-gradient(135deg, #4f46e5, #22c55e);
@@ -197,6 +197,38 @@
         grid-template-columns: minmax(0, 1fr);
       }
     }
+
+    /* Simple nav styling (optional, in case it wasn't in your original CSS) */
+    .logo-text {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    nav a:hover {
+      color: #e5e7eb;
+      text-decoration: underline;
+    }
+
+    #status {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
   </style>
 </head>
 <body>
@@ -207,7 +239,7 @@
         <div class="logo-text">My Community Center</div>
       </div>
       <nav>
-        <a href="about.html">Who we are</a>		<!-- Change section in " " to modify destination of the click-->
+        <a href="about.html">Who we are</a>
         <a href="index.html#services">Our Mission</a>
         <a href="index.html#contact">Contact</a>
         <button class="nav-cta" onclick="window.location.href='index.html'">
@@ -215,47 +247,62 @@
         </button>
       </nav>
     </header>
-  
-  <div class="page">
-    <header>
-      <h1>Message Board</h1>
-      <p>Post a message and see it appear below. Messages are stored on the server.</p>
-    </header>
 
-    <main class="board">
-      <!-- New post form -->
-      <section class="card">
-        <h2>New message</h2>
-        <form id="messageForm">
-          <div class="field">
-            <label for="author">Name</label>
-            <input id="author" name="author" placeholder="Your name" />
-          </div>
-          <div class="field">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="4" placeholder="What do you want to say?" required></textarea>
-          </div>
-          <button type="submit" class="btn-primary">Post message</button>
-        </form>
-      </section>
+    <div class="page">
+      <header>
+        <h1>Message Board</h1>
+        <p>Post a message and see it appear below. Messages are stored in a private Google Sheet.</p>
+      </header>
 
-      <!-- Message list -->
-      <section class="card">
-        <div class="toolbar">
-          <span>Messages</span>
-          <!-- If you later want a Clear All button, we can wire a DELETE endpoint -->
-        </div>
-        <div id="posts" class="posts-list"></div>
-      </section>
-    </main>
+      <main class="board">
+        <!-- New post form -->
+        <section class="card">
+          <h2>New message</h2>
+          <form id="messageForm">
+            <div class="field">
+              <label for="name">Name</label>
+              <!-- name="name" so Apps Script can read e.parameter.name -->
+              <input id="name" name="name" placeholder="Your name (optional)" />
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="4" placeholder="What do you want to say?" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary">Post message</button>
+            <div id="status"></div>
+          </form>
+        </section>
+
+        <!-- Message list -->
+        <section class="card">
+          <div class="toolbar">
+            <span>Messages</span>
+          </div>
+          <div id="posts" class="posts-list"></div>
+        </section>
+      </main>
+    </div>
   </div>
 
   <script>
+    // 🔗 1) Put your Apps Script Web App URL here:
+    const BACKEND_URL = https://script.google.com/macros/s/AKfycbyO9lPcinCho5Ij8uoPU8DXKUc9Gwx_Mm9lIln9Glk-9uBzS7kAPs3rae7Rc-lUSt1V/exec;
+
     const postsContainer = document.getElementById("posts");
     const form = document.getElementById("messageForm");
+    const statusDiv = document.getElementById("status");
 
-    function formatTime(dateString) {
-      const d = new Date(dateString);
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    function formatTime(value) {
+      if (!value) return "";
+      const d = new Date(value);
+      if (isNaN(d.getTime())) return "";
       return d.toLocaleString();
     }
 
@@ -270,6 +317,7 @@
         return;
       }
 
+      // Show newest first
       posts
         .slice()
         .reverse()
@@ -282,18 +330,18 @@
 
           const author = document.createElement("span");
           author.className = "post-author";
-          author.textContent = post.author || "Anonymous";
+          author.textContent = post.name || "Anonymous";
 
           const time = document.createElement("span");
           time.className = "post-time";
-          time.textContent = formatTime(post.createdAt);
+          time.textContent = formatTime(post.timestamp);
 
           header.appendChild(author);
           header.appendChild(time);
 
           const msg = document.createElement("div");
           msg.className = "post-message";
-          msg.textContent = post.message;
+          msg.innerHTML = escapeHtml(post.message || "");
 
           wrapper.appendChild(header);
           wrapper.appendChild(msg);
@@ -302,34 +350,47 @@
     }
 
     async function loadPosts() {
+      statusDiv.textContent = "Loading messages...";
       try {
-        const res = await fetch("/api/messages");
+        const res = await fetch(BACKEND_URL);
         if (!res.ok) throw new Error("Failed to load messages");
         const data = await res.json();
         renderPosts(data);
+        statusDiv.textContent = "";
       } catch (err) {
         console.error(err);
         postsContainer.innerHTML = "<div class='empty'>Error loading messages.</div>";
+        statusDiv.textContent = "Could not load messages.";
       }
     }
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const author = document.getElementById("author").value.trim();
+      const name = document.getElementById("name").value.trim();
       const message = document.getElementById("message").value.trim();
       if (!message) return;
 
+      statusDiv.textContent = "Posting your message...";
+
       try {
-        const res = await fetch("/api/messages", {
+        // Apps Script doPost(e) receives e.parameter.name and e.parameter.message
+        const res = await fetch(BACKEND_URL, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ author, message }),
+          body: new URLSearchParams({ name, message }),
         });
-        if (!res.ok) throw new Error("Failed to save message");
+
+        const result = await res.json().catch(() => ({}));
+
+        if (!res.ok || (result.ok === false)) {
+          throw new Error("Failed to save message");
+        }
+
         form.reset();
+        statusDiv.textContent = "Message posted!";
         await loadPosts();
       } catch (err) {
         console.error(err);
+        statusDiv.textContent = "There was a problem posting your message.";
         alert("There was a problem posting your message.");
       }
     });
