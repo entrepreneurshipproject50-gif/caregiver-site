@@ -1,0 +1,3 @@
+git add .
+git commit -m "Move site to root for GitHub Pages"
+git push
