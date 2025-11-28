@@ -199,7 +199,23 @@
     }
 
     /* Simple nav styling (optional, in case it wasn't in your original CSS) */
-    .logo-text {
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 30% 0, #22d3ee, #6366f1 45%, #a855f7 100%);
+      box-shadow:
+        0 0 25px rgba(56, 189, 248, 0.7),
+        0 0 45px rgba(79, 70, 229, 0.55);
+    }
+	
+	.logo-text {
       font-weight: 600;
       margin-bottom: 6px;
     }
