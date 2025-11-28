@@ -30,8 +30,20 @@
     }
 
     header {
-      text-align: center;
-      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 20px;
+      margin-bottom: 26px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7));
+      backdrop-filter: blur(22px);
+      box-shadow: var(--shadow-soft);
+      position: sticky;
+      top: 12px;
+      z-index: 10;
     }
 
     header h1 {
