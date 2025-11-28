@@ -26,7 +26,7 @@
     }
 
     body {
-      background: radial-gradient(circle at top, #111827 25%, #020617 45%, #000 100%);	<!-- These control the background colors-->
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
       color: var(--text);
       min-height: 100vh;
     }
@@ -127,7 +127,7 @@
     }
 
     .hero-main {
-	  padding: 22px 20px 24px;
+      padding: 22px 20px 24px;
       border-radius: 26px;
       border: 1px solid var(--border);
       background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.3), transparent 55%),
@@ -256,7 +256,7 @@
     }
 
     .panel h2 {
-      font-size: 0.98rem;
+      font-size: 2rem;
       margin-bottom: 8px;
     }
 
@@ -431,6 +431,27 @@
         order: 2;
       }
     }
+
+/* STEPS */
+.steps {
+  list-style: none;        /* remove bullets */
+  padding: 0;
+  margin: 0;
+}
+
+.steps li {
+  margin-bottom: 40px;     /* spacing between steps */
+}
+
+.step-title {
+  font-weight: 600;        /* bold title */
+  margin-bottom: 4px;
+}
+
+.step-desc {
+  margin-left: 20px;       /* indentation */
+  color: var(--muted, #777);
+}
 	
 .card-button {
   display: block;
@@ -444,199 +465,66 @@
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
-	
-  </style>
+
+</style>
 </head>
 <body>
   <div class="page">
     <header>
       <div class="logo">
         <div class="logo-mark"></div>
-        <div class="logo-text">Together in Care</div>
+        <div class="logo-text">My Community Center</div>
       </div>
       <nav>
-        <a href="about.html">Who we are</a>
+        <a href="index.html#about">Who we are</a>		<!-- Change section in " " to modify destination of the click-->
         <a href="#services">Our Mission</a>
         <a href="#contact">Contact</a>
-        <button class="nav-cta" onclick="document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' })">
-          Let’s talk
+        <button class="nav-cta" onclick="window.location.href='index.html'">
+          Home
         </button>
       </nav>
     </header>
-
-    <main>
-      <section class="hero">
-        <div class="hero-main">
-          <div class="eyebrow">
-            <span class="eyebrow-dot"></span>
-            <span>Find Your Community · Learn What to Expect · Find Vetted Resources</span>
-          </div>
-          <h1>
-            A Learning and Support Community Space
-            <span>For You.</span>
-          </h1>
-          <p class="hero-subtitle">
-            We help caregivers manage the information overload, so they can spend less time managing chaos and more time being family.
-          </p>
-
-          <div class="hero-actions">
-            <button class="btn-primary" onclick="window.location.href='cohortquiz.html'">
-              Take our Cohort Quiz →
-            </button>
-            <button class="btn-ghost" onclick="window.location.href='message-board.html'">
-              Community Messages
-            </button>
-          </div>
-<!-- Pill Items Commented out
-          <div class="hero-meta">
-            <span>⚡ Loads fast</span>
-            <span>📱 Mobile–friendly</span>
-            <span>🎨 Easy to customize</span>
-          </div> -->
-        </div>
-
-
-
-        <aside class="hero-side">
-          <div class="panel">
-            <h2>Navigating:</h2>
-            <div class="pill-row">
-              <button class="btn-ghost" onclick="window.location.href='how-we-work.html'">How We Work </button>
-              <button class="btn-ghost" onclick="window.location.href='our-focus.html'">Our Focus</button>
-              <button class="btn-ghost" onclick="window.location.href='support.html'">Support</button>
-            </div>
-            <div class="metric-row">
-              <div class="metric">
-                <div class="metric-label">Caregivers Online</div>  
-				<!-- Caregivers Online?? -->
-                <!-- <div class="metric-value">1 day</div> -->
-				<div class="metric-value">
-				<span id="activeVisitors">0</span>
-				</div>
-              </div>
-              <div class="metric">
-                <div class="metric-label">Designed for</div>
-                <div class="metric-value">Clarity</div>
-              </div>
-            </div>
-          </div>
-        </aside>
-      </section>
-
-      <section id="about">
-        <h2>Our Mission</h2>
+	
+	 <section class="hero-side">
+	 <div class="panel">
+        <h2>Community Support</h2>
         <p>
-          Guiding caregivers with clear learning paths, peer connection, and ready-to-use tools, so they can spend less time managing chaos and more time being family.	 
-        </p>
-		<ul style="list-style-type:circle; margin: 20px; margin-left: 80px;">
-			<li>Find connections to reduce isolation.</li>
-			<li>Help reduce guilt about not doing “enough” for parents​</li>
-			<li>Learn what to expect at each stage from peers living it now</li>
-			<li>Build skills for daily care, safety, and planning </li>
-			<li>Prepare for medical visits with simple checklists, question prompts, and post-visit recap templates</li>
-			<li>Find vetted resources and benefits through curated lists</li>
-		</ul>
-      </section>
+	<!--We know caregiving can feel lonely and overwhelming, so Together in Care gives family caregivers a simple way to move from feeling alone and overloaded to 
+	feeling a bit more prepared and connected. -->
+		</p>
+<ul class="steps" style="margin-top: 40px;" >
+  <!--
+  <li>
+    <div class="step-title">Step 1: Share Your Situation</div>
+    <div class="step-desc">Answer a few short questions about your loved one’s dementia stage and your role in their care.</div>
+  </li>
 
-      <section id="services">
-        <h2>5 Pillars of our Community</h2>
-        <div class="grid">
-          <article class="card">
-            <a href="cohort_community.html" class="card card-button">
-			<h3>Cohort Community</h3>
-            <p>Matched groups based on dementia progression for relevant support and shared experiences</p>
-			</a>
-          </article>
-          <article class="card">
-			<a href="structuredlearning.html" class="card card-button">
-            <h3>Structured Learning Paths</h3>
-            <p>Short courses, expert videos, and plain-language guides that help caregivers build skills confidently</p>
-			</a>
-		  </article>
-          <article class="card">
-			<a href="peercommunity.html" class="card card-button">
-            <h3>Peer Community</h3>
-            <p>Real-time discussions, prompts, and emotional validation that reduce isolation and guilt</p>
-			</a>
-		  </article>
-		  <article class="card">
-			<a href="visittools.html" class="card card-button">
-            <h3>Visit Ready Tools</h3>
-            <p>Checklists, question prompts, and templates that simplify medical appointments and follow-ups</p>
-			</a>
-		  </article>
-		  <article class="card">
-			<a href="libraryresources.html" class="card card-button">
-            <h3>Curated Resource Library</h3>
-            <p>Vetted benefits, services, and caregiver-recommended resources—no more endless searching</p>
-			</a>
-          </article>
-        </div>
-      </section>
+  <li>
+    <div class="step-title">Step 2: Join A Small Cohort</div>
+    <div class="step-desc">Get placed in a small group of family caregivers in a similar stage so your questions and stories feel relevant to each other.</div>
+  </li>
 
-      <section id="contact" class="contact">
-        <h2>Contact</h2>
-        <p>Ready to connect? Replace this form with your own setup (email, form tool, etc.).</p>
-        <form action="https://script.google.com/macros/s/AKfycbxqPeLNJTADbLPVl9RBAB7l-eqPRPqmUFWwbDuqtAergiwKqPTQY2x-AERtinyRvKLs/exec" method="POST">
-			<div class="field">
-				<label for="name">Name</label>
-				<input id="name" name="name" placeholder="Your name" required />
-			</div>
-
-			<div class="field">
-				<label for="email">Email</label>
-				<input id="email" name="email" type="email" placeholder="you@example.com" required />
-			</div>
-
-			<div class="field">
-				<label for="message">Message</label>
-				<textarea id="message" name="message" placeholder="What can I help you with?" required></textarea>
-			</div>
-
-  <button class="btn-primary" type="submit">Send message</button>
-</form>
-	</section>
-    </main>
-
-    <footer>
-      © <span id="year"></span> Bloch Of Cheese LLC · Built with HTML, CSS, &amp; CHEDDAR
-    </footer>
-  </div>
-
-  <script>
-    // Set current year in footer
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-   // Simple fake form handler
-   // function handleSubmit(event) {
-   //   event.preventDefault();
-   //   alert("This form is just a demo. Wire it up to your own backend or form service.");
-   //   event.target.reset();
-   // }
-  </script>
-<script>
-  (function () {
-    const activeEl = document.getElementById("activeVisitors");
-    if (!activeEl) return;
-
-    const protocol = window.location.protocol === "https:" ? "wss://" : "ws://";
-    const ws = new WebSocket(protocol + window.location.host);
-
-    ws.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        if (data.type === "userCount") {
-          activeEl.textContent = data.count;
-        }
-      } catch (e) {
-        console.error("WebSocket message error:", e);
-      }
-    };
-
-    ws.onopen = () => console.log("WS connected");
-    ws.onclose = ().log("WS disconnected");
-  });
-</script>
-
-</body>
+  <li>
+    <div class="step-title">Step 3: Learn and Connect at Your Own Pace</div>
+    <div class="step-desc">Take part in short sessions, try out visit-ready tools, and join conversations on our message board when you have the time and energy.</div>
+  </li>
+  -->
+  
+</ul>
+        
+		<div style="text-align:center; margin: 40px auto 0 auto; ">
+		<img src="under-construction.png" alt="Description of the image" />
+		</div>
+		</div>
+	  </section>
+<!--</style>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Test Page</title>
+  </head>
+  <body style="background:#111; color:#fff; font-family:sans-serif;">
+    <h1>Hello, this is working ✅</h1>
+    <p>If you see this, your browser + file setup is fine.</p>
+  </body>
+  -->
 </html>
