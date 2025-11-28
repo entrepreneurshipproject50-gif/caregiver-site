@@ -256,7 +256,7 @@
     }
 
     .panel h2 {
-      font-size: 0.98rem;
+      font-size: 2rem;
       margin-bottom: 8px;
     }
 
@@ -314,9 +314,9 @@
     }
 
     section p {
-      font-size: 0.95rem;
+      font-size: 1.5rem;
       color: var(--muted);
-      max-width: 36rem;
+      max-width: 54rem;
     }
 
     .grid {
@@ -431,6 +431,27 @@
         order: 2;
       }
     }
+
+/* STEPS */
+.steps {
+  list-style: none;        /* remove bullets */
+  padding: 0;
+  margin: 0;
+}
+
+.steps li {
+  margin-bottom: 40px;     /* spacing between steps */
+}
+
+.step-title {
+  font-weight: 600;        /* bold title */
+  margin-bottom: 4px;
+}
+
+.step-desc {
+  margin-left: 20px;       /* indentation */
+  color: var(--muted, #777);
+}
 	
 .card-button {
   display: block;
@@ -464,13 +485,32 @@
       </nav>
     </header>
 	
-	 <section id="CommunityStory">
-        <h2>Structured Learning Paths</h2>
+	 <section class="hero-side">
+	 <div class="panel">
+        <h2>How We Work</h2>
         <p>
-          Under Construction
-        </p>
+We know caregiving can feel lonely and overwhelming, so Together in Care gives family caregivers a simple way to move from feeling alone and overloaded to feeling a bit more prepared and connected.
+		</p>
+<ul class="steps" style="margin-top: 40px;" >
+  <li>
+    <div class="step-title">Step 1: Share Your Situation</div>
+    <div class="step-desc">Answer a few short questions about your loved one’s dementia stage and your role in their care.</div>
+  </li>
+
+  <li>
+    <div class="step-title">Step 2: Join A Small Cohort</div>
+    <div class="step-desc">Get placed in a small group of family caregivers in a similar stage so your questions and stories feel relevant to each other.</div>
+  </li>
+
+  <li>
+    <div class="step-title">Step 3: Learn and Connect at Your Own Pace</div>
+    <div class="step-desc">Take part in short sessions, try out visit-ready tools, and join conversations on our message board when you have the time and energy.</div>
+  </li>
+</ul>
+        
 		<div style="text-align:center; margin: 40px auto 0 auto; ">
-		<img src="under-construction.png" alt="Description of the image" />
+		<!-- <img src="under-construction.png" alt="Description of the image" /> -->
+		</div>
 		</div>
 	  </section>
 <!--</style>
